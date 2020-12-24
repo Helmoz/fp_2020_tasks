@@ -3,6 +3,7 @@ module Part2 where
 import Part2.Types
 import Data.Foldable
 import Data.Maybe
+import Data.Function ((&))
 
 ------------------------------------------------------------
 -- PROBLEM #6
@@ -131,7 +132,9 @@ prob14 = error "Implement me!"
 -- Выполнить вращение дерева влево относительно корня
 -- (https://en.wikipedia.org/wiki/Tree_rotation)
 prob15 :: Tree a -> Tree a
-prob15 = error "Implement me!"
+prob15 tree = maybe tree leftR $ tree & right
+    where
+        leftR sub = sub { left = Just $ tree { right = sub & left } }
 
 ------------------------------------------------------------
 -- PROBLEM #16
@@ -139,7 +142,9 @@ prob15 = error "Implement me!"
 -- Выполнить вращение дерева вправо относительно корня
 -- (https://en.wikipedia.org/wiki/Tree_rotation)
 prob16 :: Tree a -> Tree a
-prob16 = error "Implement me!"
+prob16 tree = maybe tree rightR $ tree & left
+    where
+        rightR sub = sub { right = Just $ tree { left = sub & right } }
 
 ------------------------------------------------------------
 -- PROBLEM #17
