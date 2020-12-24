@@ -1,5 +1,6 @@
 module Part3 where
 
+import Data.List (group)
 ------------------------------------------------------------
 -- PROBLEM #18
 --
@@ -21,7 +22,10 @@ getSimpleDivisors divisor n
 -- разложении числа N (1 <= N <= 10^9). Простые делители
 -- должны быть расположены по возрастанию
 prob19 :: Integer -> [(Integer, Int)]
-prob19 = error "Implement me!"
+prob19 n = map (\divs -> (head divs, length divs)) groupDivisors
+  where
+    groupDivisors :: [[Integer]]
+    groupDivisors = group (getSimpleDivisors 2 n)
 
 ------------------------------------------------------------
 -- PROBLEM #20
