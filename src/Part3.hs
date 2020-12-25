@@ -90,7 +90,16 @@ iCount xs = toInteger (length (filter (== 'i') xs))
 -- M > 0 и N > 0. Если M > N, то вернуть символы из W в
 -- обратном порядке. Нумерация символов с единицы.
 prob23 :: String -> Maybe String
-prob23 = error "Implement me!"
+prob23 input = let
+  left = min start end
+  right = max start end
+  (start, afterStart) = head (reads input :: [(Int, String)])
+  (end, afterEnd) = head (reads (drop 1 afterStart) :: [(Int, String)])
+  string = drop 2 afterEnd
+  in if left <= length string && right <= length string
+   then let order = if start <= end then (\ x -> x) else reverse
+   in Just $ (order . take (right - left + 1) . drop (left - 1)) string
+   else Nothing
 
 ------------------------------------------------------------
 -- PROBLEM #24
@@ -155,7 +164,10 @@ prob28 = error "Implement me!"
 -- Найти наибольшее число-палиндром, которое является
 -- произведением двух K-значных (1 <= K <= 3)
 prob29 :: Int -> Int
-prob29 k = error "Implement me!"
+prob29 numberOfDigits = maximum [x * y | x <- [min .. max], y <- [min .. max], (prob25 . toInteger)  (x * y)]
+ where
+     min = 10 ^ (numberOfDigits - 1)
+     max = 10 ^ numberOfDigits - 1
 
 ------------------------------------------------------------
 -- PROBLEM #30
@@ -163,7 +175,11 @@ prob29 k = error "Implement me!"
 -- Найти наименьшее треугольное число, у которого не меньше
 -- заданного количества делителей
 prob30 :: Int -> Integer
-prob30 = error "Implement me!"
+prob30 count = getMinNumber 1 2
+  where
+    getMinNumber triangular number
+      | (length . divisors) triangular >= count = triangular
+      | otherwise = getMinNumber (triangular + number) (succ number)
 
 ------------------------------------------------------------
 -- PROBLEM #31
