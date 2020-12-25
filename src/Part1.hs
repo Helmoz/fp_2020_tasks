@@ -72,20 +72,18 @@ withCounter step n counter = withCounter step (step n) (counter + 1)
 -- Число n по модулю не превосходит 10^5
 prob4 :: Integer -> Integer
 prob4 n
-  | n == 0 = 1
-  | n > 0 = positive n
-  | n < 0 = negative n
+  | n < 0 = negative 1 1 n
+  | n >= 0 = positive 1 1 n
 
-positive n
-  | n == 0 = 1
-  | n == 1 = 1
-  | otherwise = ((positive (n - 2)) + (positive (n - 1)))
+positive :: Integer -> Integer -> Integer -> Integer
+positive a b curr
+  | curr == 0 = a
+  | otherwise = positive b (a + b) (curr - 1)
 
-negative n
-  | n == 0 = 1
-  | n == 1 = 1
-  | otherwise = ((negative (n + 2)) - (negative (n + 1)))
-
+negative :: Integer -> Integer -> Integer -> Integer
+negative a b curr
+  | curr == 0 = b
+  | otherwise = negative b (a - b) (curr + 1)
 
 ------------------------------------------------------------
 -- PROBLEM #5
